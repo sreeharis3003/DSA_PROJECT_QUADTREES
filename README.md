@@ -16,13 +16,12 @@ move, cells split at the new position and **merge** back at the old one.
 On the demo scene (5,000 returns, 64 m × 64 m), the map uses **475 leaf cells** where a fixed grid at the
 same finest resolution would need **262,144 cells**.
 
-
-```
 ## Build
 Requires a C99 compiler (gcc / MinGW / TDM-GCC).
 ```bash
 mingw32-make          # Windows (TDM-GCC)   |  make   on Linux/macOS/Git Bash
 ```
+or on Windows without make (PowerShell needs the `.\` prefix):
 ```powershell
 .\build.bat
 ```
