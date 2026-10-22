@@ -16,26 +16,18 @@ move, cells split at the new position and **merge** back at the old one.
 On the demo scene (5,000 returns, 64 m × 64 m), the map uses **475 leaf cells** where a fixed grid at the
 same finest resolution would need **262,144 cells**.
 
-See [docs/DESIGN.md](docs/DESIGN.md) for the full justification, implementation trade-offs and complexity analysis.
-
 ## Repository partitions (one per member)
 ```
 src/core/      quadtree.[ch]        Member 1  Joel        node, insert, adaptive split, aggregates
 src/query/     query.[ch]           Member 2  Vishal      height / range / collision / nearest / stats
 src/dynamic/   dynamic.[ch]         Member 3  Sai Ganesan delete, merge, move & remove obstacles
 src/app/       lidar_io.[ch] main.c Member 4  Sreehari    file I/O, scene generator, ASCII maps, CLI
-tests/ data/ demo/                  Member 4  Sreehari    regression tests, sample scan, demo script
-docs/                               shared                design doc, git workflow
 ```
-Git workflow (branches, accounts, commit plan): [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md).
-Per-member notes: [docs/members/](docs/members/).
-
 ## Build
 Requires a C99 compiler (gcc / MinGW / TDM-GCC).
 ```bash
 mingw32-make          # Windows (TDM-GCC)   |  make   on Linux/macOS/Git Bash
 ```
-or on Windows without make (PowerShell needs the `.\` prefix):
 ```powershell
 .\build.bat
 ```
