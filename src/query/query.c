@@ -200,3 +200,35 @@ int qt_nearest_obstacle(const QuadTree *t, double x, double y,
     if (dist) *dist = sqrt(s.best_d2);
     return 1;
 }
+
+/* ---- statistics ---------------------------------------------------------- */
+
+static void stats_rec(const QTNode *n, TreeStats *s)
+{
+    s->nodes++;
+    s->tree_bytes += sizeof *n;
+    if (n->depth > s->max_depth) s->max_depth = n->depth;
+    if (n->is_leaf) {
+        s->leaves++;
+        if (n->count == 0) s->empty_leaves++;
+        s->points += n->count;
+        s->point_bytes += (size_t)n->cap * sizeof(LidarPoint);
+        if (n->size < s->min_leaf_size) s->min_leaf_size = n->size;
+        return;
+    }
+    for (int i = 0; i < 4; i++) stats_rec(n->child[i], s);
+}
+
+void qt_compute_stats(const QuadTree *t, TreeStats *s)
+{
+    memset(s, 0, sizeof *s);
+    if (!t || !t->root) return;
+    s->min_leaf_size = DBL_MAX;
+    stats_rec(t->root, s);
+
+    /* A uniform grid fine enough to match the smallest leaf everywhere,
+     * storing (count, min, max, sum) per cell = 4 * 8 bytes. */
+    double cells_per_side = t->root->size / s->min_leaf_size;
+    s->grid_cells = cells_per_side * cells_per_side;
+    s->grid_bytes = s->grid_cells * 32.0;
+}
