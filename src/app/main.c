@@ -1,7 +1,5 @@
 /*
  * main.c  --  Command-line driver for the adaptive 2.5D LiDAR map
- * Owner: Member 4 (Sreehari S, CB.SC.U4CSE25757)
- *
  * Usage:
  *   quadmap               interactive prompt
  *   quadmap script.txt    run commands from a file (each command is echoed)
