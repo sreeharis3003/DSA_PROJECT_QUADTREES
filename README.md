@@ -16,12 +16,7 @@ move, cells split at the new position and **merge** back at the old one.
 On the demo scene (5,000 returns, 64 m × 64 m), the map uses **475 leaf cells** where a fixed grid at the
 same finest resolution would need **262,144 cells**.
 
-## Repository partitions (one per member)
-```
-src/core/      quadtree.[ch]        Member 1  Joel        node, insert, adaptive split, aggregates
-src/query/     query.[ch]           Member 2  Vishal      height / range / collision / nearest / stats
-src/dynamic/   dynamic.[ch]         Member 3  Sai Ganesan delete, merge, move & remove obstacles
-src/app/       lidar_io.[ch] main.c Member 4  Sreehari    file I/O, scene generator, ASCII maps, CLI
+
 ```
 ## Build
 Requires a C99 compiler (gcc / MinGW / TDM-GCC).
