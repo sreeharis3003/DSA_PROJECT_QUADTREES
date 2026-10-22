@@ -1,6 +1,5 @@
 /*
  * lidar_io.h  --  LiDAR input, synthetic scenes, visualisation, benchmark
- * Owner: Member 4 (Sreehari S, CB.SC.U4CSE25757)
  */
 #ifndef LIDAR_IO_H
 #define LIDAR_IO_H
