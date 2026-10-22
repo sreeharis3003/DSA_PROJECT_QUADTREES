@@ -33,6 +33,17 @@ static int point_in_rect(const LidarPoint *p, double x1, double y1, double x2, d
     return p->x >= x1 && p->x <= x2 && p->y >= y1 && p->y <= y2;
 }
 
+/* Squared distance from (x, y) to the closest point of node n's square. */
+static double box_dist2(const QTNode *n, double x, double y)
+{
+    double dx = 0.0, dy = 0.0;
+    if (x < n->x0) dx = n->x0 - x;
+    else if (x > n->x0 + n->size) dx = x - (n->x0 + n->size);
+    if (y < n->y0) dy = n->y0 - y;
+    else if (y > n->y0 + n->size) dy = y - (n->y0 + n->size);
+    return dx * dx + dy * dy;
+}
+
 /* ---- point query: O(depth) ---------------------------------------------- */
 
 int qt_cell_at(const QuadTree *t, double x, double y, CellInfo *out)
@@ -126,4 +137,66 @@ int qt_region_blocked(const QuadTree *t, double x1, double y1,
     if (!t || !t->root) return 0;
     normalise_rect(&x1, &y1, &x2, &y2);
     return blocked_rec(t->root, qt_obstacle_threshold(t), x1, y1, x2, y2, nodes_visited);
+}
+
+/* ---- nearest obstacle (branch and bound, closest quadrant first) --------- */
+
+typedef struct {
+    double x, y, thr;
+    int found;
+    double best_d2;
+    LidarPoint best;
+    int visited;
+} NNState;
+
+static void nn_rec(const QTNode *n, NNState *s)
+{
+    s->visited++;
+    if (n->total == 0 || n->max_z <= s->thr) return;               /* no obstacles */
+    if (s->found && box_dist2(n, s->x, s->y) >= s->best_d2) return; /* too far     */
+
+    if (n->is_leaf) {
+        for (int k = 0; k < n->count; k++) {
+            const LidarPoint *p = &n->pts[k];
+            if (p->z <= s->thr) continue;
+            double dx = p->x - s->x, dy = p->y - s->y, d2 = dx * dx + dy * dy;
+            if (!s->found || d2 < s->best_d2) {
+                s->found = 1;
+                s->best_d2 = d2;
+                s->best = *p;
+            }
+        }
+        return;
+    }
+
+    /* Visit children nearest-first so the bound tightens as early as possible. */
+    int order[4] = {0, 1, 2, 3};
+    double d[4];
+    for (int i = 0; i < 4; i++) d[i] = box_dist2(n->child[i], s->x, s->y);
+    for (int i = 1; i < 4; i++) {                  /* insertion sort of 4 items */
+        int key = order[i], j = i - 1;
+        while (j >= 0 && d[order[j]] > d[key]) { order[j + 1] = order[j]; j--; }
+        order[j + 1] = key;
+    }
+    for (int i = 0; i < 4; i++) nn_rec(n->child[order[i]], s);
+}
+
+int qt_nearest_obstacle(const QuadTree *t, double x, double y,
+                        LidarPoint *out, double *dist, int *nodes_visited)
+{
+    NNState s;
+    memset(&s, 0, sizeof s);
+    if (nodes_visited) *nodes_visited = 0;
+    if (!t || !t->root || !isfinite(x) || !isfinite(y)) return 0;
+
+    s.x = x;
+    s.y = y;
+    s.thr = qt_obstacle_threshold(t);
+    nn_rec(t->root, &s);
+
+    if (nodes_visited) *nodes_visited = s.visited;
+    if (!s.found) return 0;
+    if (out) *out = s.best;
+    if (dist) *dist = sqrt(s.best_d2);
+    return 1;
 }
