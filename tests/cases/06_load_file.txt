@@ -1,0 +1,10 @@
+# Load a scan file containing malformed lines
+LOAD data/sample_scan.txt
+STATS
+HEIGHT 43 42
+HEIGHT 11 21
+OBJECTS
+MOVE 3 20 0
+NEAREST 11 21
+EXPORT tests/actual/leaves.csv
+MAP 32 16

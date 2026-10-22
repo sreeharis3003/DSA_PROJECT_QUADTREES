@@ -1,0 +1,74 @@
+> # Empty map
+> HEIGHT 5 5
+Cell [0.000, 0.000] size 64.000 m, depth 0, 0 returns
+  No data (unknown cell)
+  nodes visited: 1
+> NEAREST 1 1
+No obstacles in the map
+  nodes visited: 1
+> RANGE 0 0 64 64
+0 returns in range, 0 obstacle returns
+  nodes visited: 1
+> COLLIDE 0 0 64 64
+CLEAR - region is free
+  nodes visited: 1
+> OBJECTS
+No moving objects
+> DELETE 1 1
+No return at (1.00, 1.00)
+> MOVE 3 1 1
+No object with id 3
+> REMOVEOBJ 3
+No object with id 3
+> # Invalid input must never crash
+> INSERT abc 1 1
+Error: 'abc' is not a valid number
+> INSERT 1 2
+Usage: INSERT x y z [id]
+> INSERT 100 100 1
+Rejected: (100.00, 100.00) is outside the map. Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+> INSERT -0.5 5 1
+Rejected: (-0.50, 5.00) is outside the map. Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+> INSERT 0 0 nan
+Error: 'nan' is not a valid number
+> INSERT 1 1 1 -5
+Error: id must be >= 0
+> INSERT 1 1 1 2.5
+Error: '2.5' is not a valid integer
+> INIT 0 0 -4
+Error: size must be positive
+> INIT 0 0 0
+Error: size must be positive
+> MAP 0 5
+Error: cols and rows must be in 1 .. 200
+> DEPTH 5
+Usage: DEPTH [cols rows]
+> FOO
+Unknown command 'FOO' (type HELP)
+> REMOVEOBJ 0
+Error: id must be > 0 (id 0 is the static scene)
+> MOVE 0 1 1
+Error: only moving objects (id > 0) can be moved
+> LOAD does_not_exist.txt
+Error: cannot open 'does_not_exist.txt'
+> HEIGHT 70 70
+(70.00, 70.00) is outside the map
+> # Boundary points (closed interval) are accepted
+> INSERT 0 0 0
+Inserted (0.00, 0.00, 0.00) id=0
+> INSERT 64 64 0
+Inserted (64.00, 64.00, 0.00) id=0
+> INSERT 64 0 0
+Inserted (64.00, 0.00, 0.00) id=0
+> HEIGHT 64 64
+Cell [0.000, 0.000] size 64.000 m, depth 0, 3 returns
+  height min 0.00  max 0.00  mean 0.00  -> free
+  nodes visited: 1
+> STATS
+Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+  points          : 3
+  nodes / leaves  : 1 / 1 (0 empty)
+  max depth       : 0 (finest cell 64.000 m)
+  quadtree cells  : 0.1 KB (+ 0.2 KB raw returns)
+  fixed grid at finest resolution: 1 cells, 0.0 KB
+  leaf cells vs grid cells: 100.000%

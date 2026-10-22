@@ -1,0 +1,73 @@
+> # 8 flat points: no split (bucket not full)
+> INIT 0 0 32
+Map: [0.00, 32.00] x [0.00, 32.00] m, ground z = 0.00 m
+> INSERT 1 1 0
+Inserted (1.00, 1.00, 0.00) id=0
+> INSERT 5 1 0
+Inserted (5.00, 1.00, 0.00) id=0
+> INSERT 9 1 0
+Inserted (9.00, 1.00, 0.00) id=0
+> INSERT 13 1 0
+Inserted (13.00, 1.00, 0.00) id=0
+> INSERT 1 5 0
+Inserted (1.00, 5.00, 0.00) id=0
+> INSERT 5 5 0
+Inserted (5.00, 5.00, 0.00) id=0
+> INSERT 9 5 0
+Inserted (9.00, 5.00, 0.00) id=0
+> INSERT 13 5 0
+Inserted (13.00, 5.00, 0.00) id=0
+> STATS
+Map: [0.00, 32.00] x [0.00, 32.00] m, ground z = 0.00 m
+  points          : 8
+  nodes / leaves  : 1 / 1 (0 empty)
+  max depth       : 0 (finest cell 32.000 m)
+  quadtree cells  : 0.1 KB (+ 0.2 KB raw returns)
+  fixed grid at finest resolution: 1 cells, 0.0 KB
+  leaf cells vs grid cells: 100.000%
+> # 9th flat point: bucket full but homogeneous -> still no split (adaptive)
+> INSERT 2 2 0.05
+Inserted (2.00, 2.00, 0.05) id=0
+> STATS
+Map: [0.00, 32.00] x [0.00, 32.00] m, ground z = 0.00 m
+  points          : 9
+  nodes / leaves  : 1 / 1 (0 empty)
+  max depth       : 0 (finest cell 32.000 m)
+  quadtree cells  : 0.1 KB (+ 0.5 KB raw returns)
+  fixed grid at finest resolution: 1 cells, 0.0 KB
+  leaf cells vs grid cells: 100.000%
+> # 10th point is an obstacle -> heterogeneous -> split
+> INSERT 20 20 1.5
+Inserted (20.00, 20.00, 1.50) id=0
+> STATS
+Map: [0.00, 32.00] x [0.00, 32.00] m, ground z = 0.00 m
+  points          : 10
+  nodes / leaves  : 5 / 4 (2 empty)
+  max depth       : 1 (finest cell 16.000 m)
+  quadtree cells  : 0.5 KB (+ 0.8 KB raw returns)
+  fixed grid at finest resolution: 4 cells, 0.1 KB
+  leaf cells vs grid cells: 100.000%
+> DEPTH 8 8
+   y=32.00   +--------+
+              |11111111|
+              |11111111|
+              |11111111|
+              |11111111|
+              |11111111|
+              |11111111|
+              |11111111|
+              |11111111|
+   y=0.00    +--------+
+              x=0.00 .. 32.00
+Legend: digit = leaf depth (higher = finer cell; cell side = map / 2^depth)
+> # remove the obstacle -> cell becomes flat again -> merge back
+> DELETE 20 20
+Deleted (20.00, 20.00, 1.50) id=0
+> STATS
+Map: [0.00, 32.00] x [0.00, 32.00] m, ground z = 0.00 m
+  points          : 9
+  nodes / leaves  : 1 / 1 (0 empty)
+  max depth       : 0 (finest cell 32.000 m)
+  quadtree cells  : 0.1 KB (+ 0.5 KB raw returns)
+  fixed grid at finest resolution: 1 cells, 0.0 KB
+  leaf cells vs grid cells: 100.000%

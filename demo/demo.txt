@@ -1,0 +1,21 @@
+# ---------- Live demo walkthrough (run:  quadmap demo/demo.txt) ----------
+# 1. Build a 64 x 64 m map from a synthetic LiDAR sweep
+GEN 7 5000
+STATS
+# 2. The 2.5D height map and how resolution adapted (depth digits)
+MAP 64 24
+DEPTH 64 24
+# 3. Point queries: flat ground (big cell) vs. car (small cell)
+HEIGHT 10 10
+HEIGHT 30 16
+# 4. Planning queries
+COLLIDE 25 12 37 20
+COLLIDE 0 0 5 5
+NEAREST 30 30
+# 5. Dynamic environment: the car drives 10 m east, pedestrian leaves
+OBJECTS
+MOVE 1 10 0
+REMOVEOBJ 2
+OBJECTS
+MAP 64 24
+STATS

@@ -1,0 +1,21 @@
+# 8 flat points: no split (bucket not full)
+INIT 0 0 32
+INSERT 1 1 0
+INSERT 5 1 0
+INSERT 9 1 0
+INSERT 13 1 0
+INSERT 1 5 0
+INSERT 5 5 0
+INSERT 9 5 0
+INSERT 13 5 0
+STATS
+# 9th flat point: bucket full but homogeneous -> still no split (adaptive)
+INSERT 2 2 0.05
+STATS
+# 10th point is an obstacle -> heterogeneous -> split
+INSERT 20 20 1.5
+STATS
+DEPTH 8 8
+# remove the obstacle -> cell becomes flat again -> merge back
+DELETE 20 20
+STATS

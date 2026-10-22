@@ -1,0 +1,50 @@
+> # Load a scan file containing malformed lines
+> LOAD data/sample_scan.txt
+Loaded 326 points (4 lines skipped)
+> STATS
+Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+  points          : 326
+  nodes / leaves  : 57 / 43 (10 empty)
+  max depth       : 9 (finest cell 0.125 m)
+  quadtree cells  : 6.2 KB (+ 14.5 KB raw returns)
+  fixed grid at finest resolution: 262144 cells, 8192.0 KB
+  leaf cells vs grid cells: 0.016%
+> HEIGHT 43 42
+Cell [42.000, 42.000] size 2.000 m, depth 5, 6 returns
+  height min 2.58  max 2.62  mean 2.60  -> OCCUPIED
+  nodes visited: 6
+> HEIGHT 11 21
+Cell [10.000, 20.000] size 2.000 m, depth 5, 21 returns
+  height min 2.08  max 2.12  mean 2.10  -> OCCUPIED
+  nodes visited: 6
+> OBJECTS
+  id  points           centroid    max z
+   3      30   ( 11.07,  21.61)     2.12
+> MOVE 3 20 0
+Moved object 3 by (20.00, 0.00): 30 returns moved, 0 left the map
+> NEAREST 11 21
+Nearest obstacle (30.07, 21.90, 2.09) id=3 at distance 19.091 m
+  nodes visited: 21
+> EXPORT tests/actual/leaves.csv
+Exported 43 leaf cells to tests/actual/leaves.csv
+> MAP 32 16
+   y=64.00   +--------------------------------+
+              |................................|
+              |................................|
+              |................................|
+              |................................|
+              |................................|
+              |....................### ........|
+              |................................|
+              |................................|
+              |................................|
+              |................................|
+              |.............. #................|
+              |................................|
+              |................................|
+              |................................|
+              |................................|
+              |................................|
+   y=0.00    +--------------------------------+
+              x=0.00 .. 64.00
+Legend: ' ' no data  '.' ground(<=0.30m)  ':' <=1m  '+' <=2m  '#' >2m

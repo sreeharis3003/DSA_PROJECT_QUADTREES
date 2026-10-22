@@ -1,0 +1,32 @@
+# Empty map
+HEIGHT 5 5
+NEAREST 1 1
+RANGE 0 0 64 64
+COLLIDE 0 0 64 64
+OBJECTS
+DELETE 1 1
+MOVE 3 1 1
+REMOVEOBJ 3
+# Invalid input must never crash
+INSERT abc 1 1
+INSERT 1 2
+INSERT 100 100 1
+INSERT -0.5 5 1
+INSERT 0 0 nan
+INSERT 1 1 1 -5
+INSERT 1 1 1 2.5
+INIT 0 0 -4
+INIT 0 0 0
+MAP 0 5
+DEPTH 5
+FOO
+REMOVEOBJ 0
+MOVE 0 1 1
+LOAD does_not_exist.txt
+HEIGHT 70 70
+# Boundary points (closed interval) are accepted
+INSERT 0 0 0
+INSERT 64 64 0
+INSERT 64 0 0
+HEIGHT 64 64
+STATS

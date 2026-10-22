@@ -1,0 +1,74 @@
+> # Synthetic street scene with moving car (1) and pedestrian (2)
+> GEN 7 5000
+Generated 5000 points (seed 7): building, pole, ramp, car id=1, pedestrian id=2
+> STATS
+Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+  points          : 5000
+  nodes / leaves  : 633 / 475 (93 empty)
+  max depth       : 9 (finest cell 0.125 m)
+  quadtree cells  : 69.2 KB (+ 244.2 KB raw returns)
+  fixed grid at finest resolution: 262144 cells, 8192.0 KB
+  leaf cells vs grid cells: 0.181%
+> OBJECTS
+  id  points           centroid    max z
+   1     500   ( 30.42,  15.49)     1.52
+   2     150   ( 50.55,  19.81)     1.72
+> HEIGHT 30 16
+Cell [30.000, 16.000] size 2.000 m, depth 5, 41 returns
+  height min 1.48  max 1.52  mean 1.50  -> OCCUPIED
+  nodes visited: 6
+> COLLIDE 25 12 37 20
+BLOCKED - obstacle in region
+  nodes visited: 14
+> NEAREST 30 30
+Nearest obstacle (29.98, 17.90, 1.51) id=1 at distance 12.099 m
+  nodes visited: 69
+> MOVE 1 10 0
+Moved object 1 by (10.00, 0.00): 500 returns moved, 0 left the map
+> OBJECTS
+  id  points           centroid    max z
+   1     500   ( 40.42,  15.49)     1.52
+   2     150   ( 50.55,  19.81)     1.72
+> COLLIDE 25 12 37 20
+BLOCKED - obstacle in region
+  nodes visited: 10
+> MOVE 2 40 0
+Moved object 2 by (40.00, 0.00): 0 returns moved, 150 left the map
+> OBJECTS
+  id  points           centroid    max z
+   1     500   ( 40.42,  15.49)     1.52
+> REMOVEOBJ 1
+Removed object 1 (500 returns)
+> CLEARDYN
+Removed 0 dynamic returns
+> OBJECTS
+No moving objects
+> STATS
+Map: [0.00, 64.00] x [0.00, 64.00] m, ground z = 0.00 m
+  points          : 4350
+  nodes / leaves  : 469 / 352 (65 empty)
+  max depth       : 9 (finest cell 0.125 m)
+  quadtree cells  : 51.3 KB (+ 206.8 KB raw returns)
+  fixed grid at finest resolution: 262144 cells, 8192.0 KB
+  leaf cells vs grid cells: 0.134%
+> MAP 48 16
+   y=64.00   +------------------------------------------------+
+              |................................................|
+              |................................................|
+              |....###########.................................|
+              |....##########..................................|
+              |.... #########...................##.............|
+              |....##########..................................|
+              |................................................|
+              |.................................:::::::........|
+              |.................................:::::::........|
+              |................................................|
+              |................................................|
+              |................................................|
+              |................................................|
+              |................................................|
+              |................................................|
+              |................................................|
+   y=0.00    +------------------------------------------------+
+              x=0.00 .. 64.00
+Legend: ' ' no data  '.' ground(<=0.30m)  ':' <=1m  '+' <=2m  '#' >2m

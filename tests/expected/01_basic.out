@@ -1,0 +1,53 @@
+> # Basic insert + point query + range + nearest on a tiny map
+> INIT 0 0 16
+Map: [0.00, 16.00] x [0.00, 16.00] m, ground z = 0.00 m
+> INSERT 1 1 0.00
+Inserted (1.00, 1.00, 0.00) id=0
+> INSERT 2 2 0.02
+Inserted (2.00, 2.00, 0.02) id=0
+> INSERT 3 3 -0.01
+Inserted (3.00, 3.00, -0.01) id=0
+> INSERT 12 12 1.80 1
+Inserted (12.00, 12.00, 1.80) id=1
+> INSERT 12.5 12.5 1.75 1
+Inserted (12.50, 12.50, 1.75) id=1
+> HEIGHT 1 1
+Cell [0.000, 0.000] size 8.000 m, depth 1, 3 returns
+  height min -0.01  max 0.02  mean 0.00  -> free
+  nodes visited: 2
+> HEIGHT 12 12
+Cell [8.000, 8.000] size 8.000 m, depth 1, 2 returns
+  height min 1.75  max 1.80  mean 1.77  -> OCCUPIED
+  nodes visited: 2
+> RANGE 0 0 4 4
+  (1.00, 1.00, 0.00) id=0
+  (2.00, 2.00, 0.02) id=0
+  (3.00, 3.00, -0.01) id=0
+3 returns in range, 0 obstacle returns, max height 0.02
+  nodes visited: 5
+> RANGE 4 4 0 0
+  (1.00, 1.00, 0.00) id=0
+  (2.00, 2.00, 0.02) id=0
+  (3.00, 3.00, -0.01) id=0
+3 returns in range, 0 obstacle returns, max height 0.02
+  nodes visited: 5
+> NEAREST 0 0
+Nearest obstacle (12.00, 12.00, 1.80) id=1 at distance 16.971 m
+  nodes visited: 5
+> COLLIDE 0 0 8 8
+CLEAR - region is free
+  nodes visited: 5
+> COLLIDE 10 10 14 14
+BLOCKED - obstacle in region
+  nodes visited: 5
+> OBJECTS
+  id  points           centroid    max z
+   1       2   ( 12.25,  12.25)     1.80
+> STATS
+Map: [0.00, 16.00] x [0.00, 16.00] m, ground z = 0.00 m
+  points          : 5
+  nodes / leaves  : 5 / 4 (2 empty)
+  max depth       : 1 (finest cell 8.000 m)
+  quadtree cells  : 0.5 KB (+ 0.5 KB raw returns)
+  fixed grid at finest resolution: 4 cells, 0.1 KB
+  leaf cells vs grid cells: 100.000%
