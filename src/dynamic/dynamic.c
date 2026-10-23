@@ -1,7 +1,4 @@
-/*
- * dynamic.c  --  Dynamic-environment updates: delete, move, merge
- * Owner: Member 3 (Sai Ganesan, CB.SC.U4CSE25749)
- */
+
 #include "dynamic.h"
 
 #include <math.h>
