@@ -1,14 +1,4 @@
-/*
- * dynamic.h  --  Dynamic-environment updates: delete, move, merge
- * Owner: Member 3 (Sai Ganesan, CB.SC.U4CSE25749)
- *
- * When obstacles move or disappear, cells that were subdivided for them must
- * collapse back (merge) so the map stays compact. The merge rule is the exact
- * inverse of the split rule in quadtree.c:
- *     merge 4 leaf children  <=>  merged cell would NOT be split again
- *     (height spread of the merged cell <= QT_HEIGHT_TOL, or it is empty)
- * so the tree shape is always the same as if it had been built from scratch.
- */
+
 #ifndef DYNAMIC_H
 #define DYNAMIC_H
 
