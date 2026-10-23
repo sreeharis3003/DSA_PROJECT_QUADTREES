@@ -1,21 +1,4 @@
-/*
- * quadtree.h  --  Core adaptive-resolution quadtree for 2.5D LiDAR mapping
- * Owner: Member 1 (Joel, CB.SC.U4CSE25720)
- *
- * A region quadtree over a square ground area. Every node covers the square
- * [x0, x0+size] x [y0, y0+size]. Leaves hold the raw LiDAR returns that fall
- * in their cell (a "bucket"); every node also keeps aggregate height
- * statistics (count / min / max / sum of z) for its whole subtree, which the
- * query module uses to prune entire branches.
- *
- * Adaptive rule: a leaf is split into 4 children ONLY when it is
- *   heterogeneous -> height spread (max_z - min_z) > QT_HEIGHT_TOL
- * and it is still allowed to go deeper (depth / minimum cell size limits).
- * So every leaf is (as far as the limits allow) a cell of uniform height:
- * flat ground stays as a few big cells no matter how many returns hit it,
- * while obstacle edges get fine cells -> the number of cells grows with
- * scene complexity, not with area or with the number of LiDAR returns.
- */
+
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
