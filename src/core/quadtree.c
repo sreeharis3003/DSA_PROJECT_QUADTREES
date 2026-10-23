@@ -1,7 +1,4 @@
-/*
- * quadtree.c  --  Core adaptive-resolution quadtree (create / insert / split)
- * Owner: Member 1 (Joel, CB.SC.U4CSE25720)
- */
+
 #include "quadtree.h"
 
 #include <float.h>
